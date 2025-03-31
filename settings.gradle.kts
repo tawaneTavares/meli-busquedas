@@ -22,6 +22,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "meli"
-include(":app")
-include(":data")
-include(":domain")
+include(":app", ":domain", ":data")
