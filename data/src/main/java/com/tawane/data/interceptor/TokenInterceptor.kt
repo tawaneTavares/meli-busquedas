@@ -8,7 +8,7 @@ const val AUTH_HEADER = "Authorization"
 const val ACCEPT_HEADER = "accept"
 const val APPLICATION_JSON_HEADER = "application/json"
 
-class TokenInterceptor @Inject constructor(private val tokenProvider: TokenProvider) : Interceptor {
+class TokenInterceptor @Inject constructor(private val tokenProvider: ITokenProvider) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = tokenProvider.getToken()
         val requestBuilder = chain.request()
