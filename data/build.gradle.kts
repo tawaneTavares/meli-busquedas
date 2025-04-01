@@ -14,6 +14,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("String", "BASE_URL", "\"https://api.mercadolibre.com/\"")
+        buildConfigField("String", "API_TOKEN", "\"APP_USR-123456-090515-8cc4448aac10d5105474e1351-1234567\"")
     }
 
     buildTypes {
@@ -21,7 +23,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
