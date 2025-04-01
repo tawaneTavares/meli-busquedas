@@ -1,4 +1,4 @@
-package com.tawane.data.remote.interceptor
+package com.tawane.data.interceptor
 
 import com.tawane.data.BuildConfig
 import javax.inject.Inject

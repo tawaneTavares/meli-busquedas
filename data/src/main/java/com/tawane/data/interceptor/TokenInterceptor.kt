@@ -1,4 +1,4 @@
-package com.tawane.data.remote.interceptor
+package com.tawane.data.interceptor
 
 import javax.inject.Inject
 import okhttp3.Interceptor

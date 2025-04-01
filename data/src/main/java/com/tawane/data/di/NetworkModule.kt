@@ -1,9 +1,9 @@
-package com.tawane.data.remote.di
+package com.tawane.data.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tawane.data.BuildConfig
-import com.tawane.data.remote.interceptor.TokenInterceptor
+import com.tawane.data.interceptor.TokenInterceptor
 import com.tawane.data.remote.service.MeliService
 import dagger.Module
 import dagger.Provides

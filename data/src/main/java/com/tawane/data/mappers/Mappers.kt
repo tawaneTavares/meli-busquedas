@@ -1,4 +1,4 @@
-package com.tawane.data.remote.mappers
+package com.tawane.data.mappers
 
 import com.tawane.data.remote.model.AddressResponse
 import com.tawane.data.remote.model.AttributeResponse
