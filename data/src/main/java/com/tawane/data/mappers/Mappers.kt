@@ -95,10 +95,10 @@ object Mappers {
     )
 
     fun AddressResponse.toDomainModel(): DomainAddress = DomainAddress(
-        stateId = stateId,
-        stateName = stateName,
-        cityId = cityId,
-        cityName = cityName,
+        stateId = stateId ?: "",
+        stateName = stateName ?: "",
+        cityId = cityId ?: "",
+        cityName = cityName ?: "",
     )
 
     fun SellerAddressResponse.toDomainModel(): DomainSellerAddress = DomainSellerAddress(

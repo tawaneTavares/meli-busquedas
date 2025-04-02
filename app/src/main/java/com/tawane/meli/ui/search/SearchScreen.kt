@@ -67,15 +67,24 @@ import com.tawane.meli.ui.utils.formatCurrency
 fun SearchScreen(
     modifier: Modifier = Modifier,
     uiState: SearchUiState,
-    onQueryChange: (String) -> Unit = {},
+    onQueryChange: (String, String) -> Unit = { _, _ -> },
     onItemClick: (SearchItem) -> Unit = {},
 ) {
+    val context = LocalContext.current
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
         SearchBar(
             query = uiState.query,
-            onQueryChange = onQueryChange,
+            onQueryChange = {
+                onQueryChange(
+                    it,
+                    // TODO trecho de código pode ser removido após correção da api
+                    String(
+                        context.resources.openRawResource(R.raw.search_items_response).readBytes(),
+                    ),
+                )
+            },
             onSearch = {},
             active = false,
             onActiveChange = {},
@@ -108,11 +117,11 @@ fun SearchScreen(
                 var showError by remember { mutableStateOf(false) }
 
                 uiState.searchResults?.collectAsLazyPagingItems()?.let { itemsPaging ->
-                    val context = LocalContext.current
+                    val localContext = LocalContext.current
                     LaunchedEffect(key1 = itemsPaging.loadState) {
                         if (itemsPaging.loadState.refresh is LoadState.Error) {
                             Toast.makeText(
-                                context,
+                                localContext,
                                 "Error: " + (itemsPaging.loadState.refresh as LoadState.Error).error.message,
                                 Toast.LENGTH_LONG,
                             ).show()

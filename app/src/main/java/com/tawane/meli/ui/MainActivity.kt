@@ -31,8 +31,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            // TODO: add splash screen
-
             MeliTheme {
                 SearchApp(navController, moshi)
             }

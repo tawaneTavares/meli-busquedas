@@ -18,12 +18,13 @@ class SearchViewModel @Inject constructor(private val searchItemsUseCase: Search
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onQueryChange(newQuery: String) {
+    fun onQueryChange(newQuery: String, fileMock: String) {
         _uiState.update { state ->
             state.copy(
                 query = newQuery,
                 searchResults = if (newQuery.isNotEmpty() && newQuery.length >= MINIMUM_QUERY_LENGTH) {
-                    searchItemsUseCase(newQuery).cachedIn(viewModelScope)
+                    // TODO está usando o mock pois o serviço está indisponível, o correto aqui seria enviar o "newQuery"
+                    searchItemsUseCase(fileMock).cachedIn(viewModelScope)
                 } else {
                     null
                 },

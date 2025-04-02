@@ -78,10 +78,10 @@ data class AttributeValueResponse(val id: String?, val name: String?, val struct
 
 @JsonClass(generateAdapter = true)
 data class AddressResponse(
-    @Json(name = "state_id") val stateId: String,
-    @Json(name = "state_name") val stateName: String,
-    @Json(name = "city_id") val cityId: String,
-    @Json(name = "city_name") val cityName: String,
+    @Json(name = "state_id") val stateId: String?,
+    @Json(name = "state_name") val stateName: String?,
+    @Json(name = "city_id") val cityId: String?,
+    @Json(name = "city_name") val cityName: String?,
 )
 
 @JsonClass(generateAdapter = true)
