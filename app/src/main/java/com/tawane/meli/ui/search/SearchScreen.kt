@@ -29,6 +29,10 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -99,6 +103,8 @@ fun SearchScreen(
                 enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
                 exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }),
             ) {
+                var showError by remember { mutableStateOf(false) }
+
                 uiState.searchResults?.collectAsLazyPagingItems()?.let { itemsPaging ->
                     val context = LocalContext.current
                     LaunchedEffect(key1 = itemsPaging.loadState) {
@@ -108,20 +114,28 @@ fun SearchScreen(
                                 "Error: " + (itemsPaging.loadState.refresh as LoadState.Error).error.message,
                                 Toast.LENGTH_LONG,
                             ).show()
+
+                            showError = true
+                        } else {
+                            showError = false
                         }
                     }
 
-                    LoadStates(itemsPaging) {
-                        LazyColumn(
-                            modifier = modifier
-                                .fillMaxSize()
-                                .testTag("productView"),
-                            contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                        ) {
-                            items(itemsPaging.itemCount) { index ->
-                                itemsPaging[index]?.let { item ->
-                                    SearchResultItemView(item = item, onItemClick = onItemClick)
+                    if (showError) {
+                        ErrorState(modifier)
+                    } else {
+                        LoadStates(itemsPaging) {
+                            LazyColumn(
+                                modifier = modifier
+                                    .fillMaxSize()
+                                    .testTag("productView"),
+                                contentPadding = PaddingValues(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                            ) {
+                                items(itemsPaging.itemCount) { index ->
+                                    itemsPaging[index]?.let { item ->
+                                        SearchResultItemView(item = item, onItemClick = onItemClick)
+                                    }
                                 }
                             }
                         }
@@ -140,7 +154,7 @@ fun LoadStates(paging: LazyPagingItems<SearchItem>, productView: @Composable () 
         }
 
         is LoadState.NotLoading -> productView()
-        is LoadState.Error -> Text("Tratar Error") // TODO
+        is LoadState.Error -> ErrorState()
     }
 }
 
@@ -270,6 +284,26 @@ private fun PriceView(price: Double, installments: Installments?) {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun ErrorState(modifier: Modifier = Modifier) {
+    Column(
+        modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_alert_error),
+            contentDescription = null,
+            modifier = modifier
+                .size(100.dp)
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(4.dp)),
+            contentScale = ContentScale.Fit,
+        )
+        Text(text = stringResource(R.string.error_message))
     }
 }
 
