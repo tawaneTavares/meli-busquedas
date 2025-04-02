@@ -3,7 +3,6 @@ package com.tawane.meli
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import coil.decode.SvgDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
@@ -27,9 +26,6 @@ class MeliApplication :
     }
 
     override fun newImageLoader(): ImageLoader = ImageLoader.Builder(this)
-        .components {
-            add(SvgDecoder.Factory())
-        }
         .memoryCachePolicy(CachePolicy.ENABLED)
         .memoryCache {
             MemoryCache.Builder(this)
@@ -40,11 +36,10 @@ class MeliApplication :
         .diskCachePolicy(CachePolicy.ENABLED)
         .diskCache {
             DiskCache.Builder()
-                .directory(this.cacheDir.resolve("image_cache"))
                 .maxSizePercent(FIVE_PERCENT)
+                .directory(cacheDir)
                 .build()
         }
-        .crossfade(true)
         .logger(DebugLogger())
         .build()
 }

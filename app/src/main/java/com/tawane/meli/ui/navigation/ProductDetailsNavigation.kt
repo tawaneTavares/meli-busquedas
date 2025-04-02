@@ -23,8 +23,8 @@ fun NavGraphBuilder.productDetailsScreen(onPopBackStack: () -> Unit, moshi: Mosh
         route = ProductDetailsScreenDestination.routeWithArgs,
         arguments = listOf(
             navArgument(ProductDetailsScreenDestination.argument) {
-                defaultValue = 0
-                type = NavType.IntType
+                defaultValue = ""
+                type = NavType.StringType
             },
         ),
     ) { backStackEntry ->
@@ -51,6 +51,7 @@ fun NavGraphBuilder.productDetailsScreen(onPopBackStack: () -> Unit, moshi: Mosh
 
 fun NavController.navigateToProductDetails(product: SearchItem, navOptions: NavOptions? = null, moshi: Moshi) {
     val productJson = moshi.adapter(SearchItem::class.java).toJson(product)
+    Timber.d("productJson: $productJson")
     val encodedJson = Uri.encode(productJson)
     navigate("${ProductDetailsScreenDestination.route}/$encodedJson", navOptions)
 }

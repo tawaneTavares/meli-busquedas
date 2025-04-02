@@ -8,3 +8,5 @@ val TertiaryColor = Color(0xFFB9B14C)
 
 val DarkGreen = Color(0xFF4AB46E)
 val TitleGray = Color(0xFF524C4C)
+
+val appBackground = Color(0xFFECECEC)

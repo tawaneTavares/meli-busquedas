@@ -1,77 +1,26 @@
 package com.tawane.domain.model
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class SearchItem(
-    val id: String,
-    val siteId: String,
-    val title: String,
-    val seller: Seller,
-    val price: Double,
-    val currencyId: String,
-    val availableQuantity: Int,
-    val buyingMode: String,
-    val listingTypeId: String,
-    val stopTime: String,
-    val condition: String,
-    val permalink: String,
-    val thumbnail: String,
-    val acceptsMercadoPago: Boolean,
+    val siteId: String? = "",
+    val title: String? = "",
+    val price: Double? = 0.0,
+    val currencyId: String? = "",
+    val thumbnail: String? = "",
     val installments: Installments?,
-    val shipping: Shipping,
+    val shipping: Shipping?,
     val attributes: List<Attribute>,
-    val originalPrice: Double?,
-    val categoryId: String,
     val officialStoreId: Int?,
-    val catalogProductId: String?,
-    val tags: List<String>?,
-    val catalogListing: Boolean?,
-    val address: Address?,
-    val sellerAddress: SellerAddress?,
-    val differentialPricing: DifferentialPricing?,
+    val officialStoreName: String? = "",
 )
 
-data class Seller(
-    val id: Long,
-    val nickname: String? = null,
-    val powerSellerStatus: String?,
-    val carDealer: Boolean?,
-    val realEstateAgency: Boolean?,
-    val tags: List<String>?,
-)
+@JsonClass(generateAdapter = true)
+data class Installments(val quantity: Int, val amount: Double? = 0.0, val rate: Double? = 0.0)
 
-data class Installments(val quantity: Int, val amount: Double, val rate: Double, val currencyId: String)
+@JsonClass(generateAdapter = true)
+data class Shipping(val freeShipping: Boolean? = false)
 
-data class Shipping(
-    val freeShipping: Boolean,
-    val mode: String,
-    val tags: List<String>,
-    val logisticType: String,
-    val storePickUp: Boolean,
-)
-
-data class Attribute(
-    val id: String,
-    val name: String,
-    val valueId: String?,
-    val valueName: String?,
-    val valueStruct: Any?,
-    val values: List<AttributeValue>,
-    val source: Long,
-    val attributeGroupId: String,
-    val attributeGroupName: String,
-)
-
-data class AttributeValue(val id: String?, val name: String?, val struct: Any?, val source: Long)
-
-data class Address(val stateId: String, val stateName: String, val cityId: String, val cityName: String)
-
-data class SellerAddress(
-    val country: GenericResponse,
-    val state: GenericResponse,
-    val city: GenericResponse,
-    val latitude: String?,
-    val longitude: String?,
-)
-
-data class GenericResponse(val id: String, val name: String)
-
-data class DifferentialPricing(val id: Long)
+@JsonClass(generateAdapter = true)
+data class Attribute(val name: String? = "", val valueName: String? = "")

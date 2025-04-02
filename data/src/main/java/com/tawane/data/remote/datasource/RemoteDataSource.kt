@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.tawane.data.mappers.Mappers.toDomainModel
+import com.tawane.data.mappers.toDomainModel
 import com.tawane.data.remote.paging.SearchPaging
 import com.tawane.data.remote.service.MeliService
 import com.tawane.domain.model.SearchItem

@@ -11,21 +11,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -59,6 +63,7 @@ import com.tawane.meli.R
 import com.tawane.meli.ui.components.SearchSkeleton
 import com.tawane.meli.ui.components.SkeletonList
 import com.tawane.meli.ui.theme.DarkGreen
+import com.tawane.meli.ui.theme.PrimaryColor
 import com.tawane.meli.ui.theme.TitleGray
 import com.tawane.meli.ui.utils.formatCurrency
 
@@ -74,34 +79,45 @@ fun SearchScreen(
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
-        SearchBar(
-            query = uiState.query,
-            onQueryChange = {
-                onQueryChange(
-                    it,
-                    // TODO trecho de código pode ser removido após correção da api
-                    String(
-                        context.resources.openRawResource(R.raw.search_items_response).readBytes(),
-                    ),
-                )
-            },
-            onSearch = {},
-            active = false,
-            onActiveChange = {},
-            windowInsets = WindowInsets(top = 0),
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            placeholder = { Text(text = stringResource(R.string.search_hint)) },
-        ) {}
+        Column(
+            modifier = modifier.fillMaxWidth()
+                .height(106.dp)
+                .background(color = PrimaryColor)
+                .padding(top = 16.dp),
+        ) {
+            SearchBar(
+                query = uiState.query,
+                onQueryChange = {
+                    onQueryChange(
+                        it,
+                        // TODO trecho de código pode ser removido após correção da api
+                        String(
+                            context.resources.openRawResource(R.raw.search_items_response).readBytes(),
+                        ),
+                    )
+                },
+                onSearch = {},
+                active = false,
+                onActiveChange = {},
+                windowInsets = WindowInsets(top = 0),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = SearchBarColors(
+                    containerColor = Color.White,
+                    dividerColor = Color.White,
+                ),
+                placeholder = { Text(text = stringResource(R.string.search_hint)) },
+            ) {}
 
-        if (uiState.showMinimumCharactersMessage) {
-            Text(
-                text = stringResource(R.string.minimum_characters_message),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error,
-                modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            )
+            if (uiState.showMinimumCharactersMessage) {
+                Text(
+                    text = stringResource(R.string.minimum_characters_message),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = modifier.padding(horizontal = 26.dp, vertical = 4.dp),
+                )
+            }
         }
 
         if (uiState.searchResults == null) {
@@ -139,9 +155,9 @@ fun SearchScreen(
                             LazyColumn(
                                 modifier = modifier
                                     .fillMaxSize()
-                                    .testTag("productView"),
-                                contentPadding = PaddingValues(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                                    .testTag("productView")
+                                    .padding(top = 16.dp),
+                                verticalArrangement = Arrangement.spacedBy(1.dp),
                             ) {
                                 items(itemsPaging.itemCount) { index ->
                                     itemsPaging[index]?.let { item ->
@@ -176,12 +192,20 @@ fun SearchResultItemView(
     index: Int = 0,
     onItemClick: (SearchItem) -> Unit = {},
 ) {
-    Column(
+    Card(
         modifier = modifier
             .fillMaxWidth()
             .testTag("product_$index")
             .clickable { onItemClick(item) }
             .background(color = Color.White),
+        colors = CardColors(
+            disabledContainerColor = Color.White,
+            containerColor = Color.White,
+            disabledContentColor = Color.Black,
+            contentColor = Color.Black,
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = RoundedCornerShape(0.dp),
     ) {
         Row(
             modifier = modifier
@@ -191,8 +215,6 @@ fun SearchResultItemView(
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(item.thumbnail)
-                    .placeholder(R.drawable.ic_empty_image)
-                    .error(R.drawable.ic_empty_image)
                     .build(),
                 contentDescription = "Product Thumbnail", // TODO colocar no string
                 placeholder = painterResource(R.drawable.ic_empty_image),
@@ -213,9 +235,9 @@ fun SearchResultItemView(
             ) {
                 TitleView(item = item)
 
-                PriceView(price = item.price, installments = item.installments)
+                PriceView(price = item.price ?: 0.0, installments = item.installments)
 
-                if (item.shipping.freeShipping) {
+                if (item.shipping?.freeShipping == true) {
                     Text(
                         text = stringResource(R.string.free_shipping),
                         style = MaterialTheme.typography.bodySmall,
@@ -232,7 +254,7 @@ fun SearchResultItemView(
 private fun TitleView(modifier: Modifier = Modifier, item: SearchItem) {
     Column(horizontalAlignment = Alignment.Start) {
         Text(
-            text = item.title,
+            text = item.title ?: "",
             style = MaterialTheme.typography.titleSmall,
             color = TitleGray,
             maxLines = 3,
@@ -258,7 +280,7 @@ private fun TitleView(modifier: Modifier = Modifier, item: SearchItem) {
 }
 
 @Composable
-private fun PriceView(price: Double, installments: Installments?) {
+private fun PriceView(modifier: Modifier = Modifier, price: Double, installments: Installments?) {
     Column(horizontalAlignment = Alignment.Start) {
         Text(
             text = price.formatCurrency(),
@@ -272,17 +294,21 @@ private fun PriceView(price: Double, installments: Installments?) {
                     text = stringResource(R.string.installments_in),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black,
+                    modifier = modifier.padding(end = 4.dp),
                 )
                 Text(
-                    text = "${installments.quantity}x ${installments.amount.formatCurrency()}",
+                    text = "${installments.quantity}x ${installments.amount?.formatCurrency()}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (installments.rate == 0.0) DarkGreen else Color.Black,
+                    modifier = modifier.padding(end = 4.dp),
                 )
-                Text(
-                    text = stringResource(R.string.installments_free_interest),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = DarkGreen,
-                )
+                if (installments.rate == 0.0) {
+                    Text(
+                        text = stringResource(R.string.installments_free_interest),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = DarkGreen,
+                    )
+                }
             }
         }
     }
