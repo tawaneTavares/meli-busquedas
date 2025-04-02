@@ -116,7 +116,7 @@ fun SearchScreen(
                         LazyColumn(
                             modifier = modifier
                                 .fillMaxSize()
-                                .testTag("gridMovies"),
+                                .testTag("productView"),
                             contentPadding = PaddingValues(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
@@ -134,13 +134,13 @@ fun SearchScreen(
 }
 
 @Composable
-fun LoadStates(paging: LazyPagingItems<SearchItem>, gridMovies: @Composable () -> Unit) {
+fun LoadStates(paging: LazyPagingItems<SearchItem>, productView: @Composable () -> Unit) {
     when (paging.loadState.refresh) {
         is LoadState.Loading -> {
             SkeletonList { SearchSkeleton() }
         }
 
-        is LoadState.NotLoading -> gridMovies()
+        is LoadState.NotLoading -> productView()
         is LoadState.Error -> Text("Tratar Error") // TODO
     }
 }
@@ -155,7 +155,7 @@ fun SearchResultItemView(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .testTag("movieItem_$index")
+            .testTag("product_$index")
             .clickable { item?.let { onItemClick(it) } }
             .background(color = Color.White),
     ) {
