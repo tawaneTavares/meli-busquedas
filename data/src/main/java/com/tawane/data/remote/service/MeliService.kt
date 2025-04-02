@@ -3,13 +3,15 @@ package com.tawane.data.remote.service
 import com.tawane.data.remote.model.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MeliService {
 
-    @GET("sites/{site_id}/search/{q}")
+    @GET("sites/{siteID}/search")
     suspend fun searchItems(
-        @Path("site_id") siteId: String,
-        @Path("q") query: String,
-        @Path("page_position") position: Int,
+        @Path("siteID") siteID: String,
+        @Query("q") text: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
     ): ApiResponse
 }

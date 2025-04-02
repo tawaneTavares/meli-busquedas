@@ -92,6 +92,8 @@ fun SearchScreen(
             )
         }
 
+        // TODO: adicionar empty state
+
         Column(modifier = modifier.fillMaxSize()) {
             AnimatedVisibility(
                 visible = uiState.searchResults != null,

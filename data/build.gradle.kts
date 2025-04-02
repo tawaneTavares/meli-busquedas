@@ -15,7 +15,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         buildConfigField("String", "BASE_URL", "\"https://api.mercadolibre.com/\"")
-        buildConfigField("String", "API_TOKEN", "\"APP_USR-123456-090515-8cc4448aac10d5105474e1351-1234567\"")
+        buildConfigField(
+            "String",
+            "API_TOKEN",
+            "\"APP_USR-1086826315771364-040122-9c0e21b52d58451d660b7bfe6378a932-2367059868\"",
+        )
     }
 
     buildTypes {
