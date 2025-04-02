@@ -171,7 +171,7 @@ fun SearchResultItemView(
         modifier = modifier
             .fillMaxWidth()
             .testTag("product_$index")
-            .clickable { item?.let { onItemClick(it) } }
+            .clickable { onItemClick(item) }
             .background(color = Color.White),
     ) {
         Row(
@@ -195,16 +195,6 @@ fun SearchResultItemView(
                     .clip(RoundedCornerShape(4.dp)),
             )
 
-            // TODO: remove later
-//            Image(
-//                painter = painterResource(id = R.drawable.image_test),
-//                contentDescription = null,
-//                modifier = modifier
-//                    .size(130.dp)
-//                    .aspectRatio(1f)
-//                    .clip(RoundedCornerShape(4.dp)),
-//                contentScale = ContentScale.Fit,
-//            )
             Column(
                 modifier = modifier
                     .weight(1f)
@@ -300,9 +290,7 @@ private fun ErrorState(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.ic_alert_error),
             contentDescription = null,
             modifier = modifier
-                .size(100.dp)
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(4.dp)),
+                .size(100.dp),
             contentScale = ContentScale.Fit,
         )
         Text(text = stringResource(R.string.error_message))
@@ -320,9 +308,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.ic_search_icon),
             contentDescription = null,
             modifier = modifier
-                .size(100.dp)
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(4.dp)),
+                .size(100.dp),
             contentScale = ContentScale.Fit,
         )
         Text(
