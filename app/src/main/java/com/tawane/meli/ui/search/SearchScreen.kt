@@ -95,7 +95,9 @@ fun SearchScreen(
             )
         }
 
-        // TODO: adicionar empty state
+        if (uiState.searchResults == null) {
+            EmptyState(modifier)
+        }
 
         Column(modifier = modifier.fillMaxSize()) {
             AnimatedVisibility(
@@ -304,6 +306,29 @@ private fun ErrorState(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Fit,
         )
         Text(text = stringResource(R.string.error_message))
+    }
+}
+
+@Composable
+private fun EmptyState(modifier: Modifier = Modifier) {
+    Column(
+        modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_search_icon),
+            contentDescription = null,
+            modifier = modifier
+                .size(100.dp)
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(4.dp)),
+            contentScale = ContentScale.Fit,
+        )
+        Text(
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            text = stringResource(R.string.empty_message),
+        )
     }
 }
 

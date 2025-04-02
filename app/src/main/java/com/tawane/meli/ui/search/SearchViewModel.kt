@@ -22,7 +22,7 @@ class SearchViewModel @Inject constructor(private val searchItemsUseCase: Search
         _uiState.update { state ->
             state.copy(
                 query = newQuery,
-                searchResults = if (newQuery.isNotEmpty()) {
+                searchResults = if (newQuery.isNotEmpty() && newQuery.length >= MINIMUM_QUERY_LENGTH) {
                     searchItemsUseCase(newQuery).cachedIn(viewModelScope)
                 } else {
                     null
