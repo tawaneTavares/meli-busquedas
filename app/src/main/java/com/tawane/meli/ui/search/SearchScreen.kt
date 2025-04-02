@@ -1,7 +1,5 @@
 package com.tawane.meli.ui.search
 
-import android.icu.text.NumberFormat
-import android.icu.util.Currency
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -58,6 +56,7 @@ import com.tawane.meli.ui.components.SearchSkeleton
 import com.tawane.meli.ui.components.SkeletonList
 import com.tawane.meli.ui.theme.DarkGreen
 import com.tawane.meli.ui.theme.TitleGray
+import com.tawane.meli.ui.utils.formatCurrency
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -272,12 +271,6 @@ private fun PriceView(price: Double, installments: Installments?) {
             }
         }
     }
-}
-
-fun Double.formatCurrency(currencyCode: String = "BRL"): String { // TODO: colocar moeda de acordo
-    val format = NumberFormat.getCurrencyInstance()
-    format.currency = Currency.getInstance(currencyCode)
-    return format.format(this)
 }
 
 @Preview

@@ -47,9 +47,9 @@ import com.tawane.domain.model.SearchItem
 import com.tawane.domain.model.Seller
 import com.tawane.domain.model.Shipping
 import com.tawane.meli.R
-import com.tawane.meli.ui.search.formatCurrency
 import com.tawane.meli.ui.theme.DarkGreen
 import com.tawane.meli.ui.theme.TitleGray
+import com.tawane.meli.ui.utils.formatCurrency
 
 @Composable
 fun ProductDetailScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit, uiState: ProductDetailUiState) {
