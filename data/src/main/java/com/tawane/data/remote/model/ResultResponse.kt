@@ -11,7 +11,7 @@ data class ResultResponse(
     @Json(name = "currency_id") val currencyId: String,
     val thumbnail: String,
     val installments: InstallmentsResponse?,
-    val shipping: ShippingResponse,
+    val shipping: ShippingResponse?,
     val attributes: List<AttributeResponse>,
     @Json(name = "official_store_id") val officialStoreId: Int?,
     @Json(name = "official_store_name") val officialStoreName: String?,
