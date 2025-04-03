@@ -10,6 +10,7 @@ import com.tawane.domain.model.SearchItem
 import com.tawane.domain.model.Shipping as DomainShipping
 
 fun ResultResponse.toDomainModel(): SearchItem = SearchItem(
+    id = id,
     siteId = siteId,
     title = title,
     price = price,

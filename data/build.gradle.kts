@@ -65,4 +65,7 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
+
+    implementation(libs.androidx.room)
+    ksp(libs.androidx.room.compiler)
 }

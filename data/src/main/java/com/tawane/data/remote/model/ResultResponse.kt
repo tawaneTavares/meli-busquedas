@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ResultResponse(
+    val id: String,
     @Json(name = "site_id") val siteId: String,
     val title: String,
     val price: Double,

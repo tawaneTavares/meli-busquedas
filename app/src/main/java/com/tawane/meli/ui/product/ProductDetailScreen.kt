@@ -7,17 +7,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,6 +45,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,6 +102,10 @@ fun ProductDetailScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit, 
                 PriceView(modifier = modifier, price = item.price ?: 0.0, installments = item.installments)
 
                 ProductDescription(item = item, modifier = modifier.padding(top = 16.dp))
+            }
+
+            uiState.lastViewedItems?.let { item ->
+                HorizontalCardList(items = item, modifier = modifier.padding(top = 16.dp))
             }
         }
     }
@@ -220,6 +232,57 @@ fun ProductDescription(modifier: Modifier = Modifier, item: SearchItem) {
             item.attributes.forEach { attribute ->
                 CharacteristicItem(name = attribute.name ?: "", value = attribute.valueName ?: "")
             }
+        }
+    }
+}
+
+@Composable
+fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem) {
+    Card(
+        modifier = Modifier
+            .width(100.dp)
+            .padding(8.dp),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(item.thumbnail)
+                    .placeholder(R.drawable.ic_empty_image)
+                    .error(R.drawable.ic_empty_image)
+                    .build(),
+                contentDescription = "Product Thumbnail", // TODO colocar no string
+                placeholder = painterResource(R.drawable.ic_empty_image),
+                error = painterResource(R.drawable.ic_empty_image),
+                contentScale = ContentScale.Fit,
+                modifier = modifier
+                    .size(64.dp),
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = item.title ?: "",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
+@Composable
+fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+    ) {
+        items(items) { item ->
+            HorizontalCard(modifier = modifier, item = item)
         }
     }
 }

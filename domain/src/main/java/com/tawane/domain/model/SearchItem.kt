@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SearchItem(
+    val id: String? = "",
     val siteId: String? = "",
     val title: String? = "",
     val price: Double? = 0.0,

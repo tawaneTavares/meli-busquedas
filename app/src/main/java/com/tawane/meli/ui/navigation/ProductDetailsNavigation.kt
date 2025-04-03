@@ -37,10 +37,14 @@ fun NavGraphBuilder.productDetailsScreen(onPopBackStack: () -> Unit, moshi: Mosh
             val uiState by viewModel.uiState.collectAsState()
             LaunchedEffect(Unit) {
                 productItem?.let { viewModel.applyProductDetail(it) }
+                viewModel.getLastViewedItems()
             }
 
             ProductDetailScreen(
-                onBackClick = onPopBackStack,
+                onBackClick = {
+                    productItem?.let { viewModel.saveLastViewedItem(it) }
+                    onPopBackStack()
+                },
                 uiState = uiState,
             )
         } ?: LaunchedEffect(Unit) {
