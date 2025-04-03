@@ -44,7 +44,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -155,7 +154,6 @@ fun SearchScreen(
                             LazyColumn(
                                 modifier = modifier
                                     .fillMaxSize()
-                                    .testTag("productView")
                                     .padding(top = 16.dp),
                                 verticalArrangement = Arrangement.spacedBy(1.dp),
                             ) {
@@ -186,16 +184,10 @@ fun LoadStates(paging: LazyPagingItems<SearchItem>, productView: @Composable () 
 }
 
 @Composable
-fun SearchResultItemView(
-    modifier: Modifier = Modifier,
-    item: SearchItem,
-    index: Int = 0,
-    onItemClick: (SearchItem) -> Unit = {},
-) {
+fun SearchResultItemView(modifier: Modifier = Modifier, item: SearchItem, onItemClick: (SearchItem) -> Unit = {}) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .testTag("product_$index")
             .clickable { onItemClick(item) }
             .background(color = Color.White),
         colors = CardColors(
