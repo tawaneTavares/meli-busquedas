@@ -33,6 +33,8 @@ class SearchViewModelTest {
         viewModel = SearchViewModel(searchItemsUseCase)
     }
 
+    // TODO: tests won't work until the api is fixed
+
     @Test
     fun `search item return empty state when query is empty`() = runTest {
         viewModel.onQueryChange("")
