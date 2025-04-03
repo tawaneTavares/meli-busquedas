@@ -2,6 +2,7 @@ package com.tawane.data.repository
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
+import com.tawane.data.mock.MockResponse.QUERY
 import com.tawane.data.mock.MockResponse.listSearchItem
 import com.tawane.data.remote.datasource.IRemoteDataSource
 import io.mockk.coEvery
@@ -32,21 +33,21 @@ class MeliRepositoryTest {
     @Test
     fun `search item return paging data Success`() = runTest {
         val pagingData = PagingData.from(listSearchItem)
-        every { remoteDataSource.searchItems("Test") } returns flowOf(pagingData)
+        every { remoteDataSource.searchItems(QUERY) } returns flowOf(pagingData)
 
-        val result = repository.searchItems("Test").first()
+        val result = repository.searchItems(QUERY).first()
 
         assertNotNull(result)
-        coVerify { remoteDataSource.searchItems("Test") }
+        coVerify { remoteDataSource.searchItems(QUERY) }
     }
 
     @Test
     fun `search item return paging data Error`() = runTest {
         val exception = RuntimeException("error")
-        every { remoteDataSource.searchItems("Test") } throws exception
+        every { remoteDataSource.searchItems(QUERY) } throws exception
 
         try {
-            repository.searchItems("Test").first()
+            repository.searchItems(QUERY).first()
             assert(false) { "exception" }
         } catch (e: Exception) {
             assertEquals(exception.message, e.message)
@@ -56,9 +57,9 @@ class MeliRepositoryTest {
     @Test
     fun `search item emit paging data Success`() = runTest {
         val pagingData = PagingData.from(listSearchItem)
-        coEvery { remoteDataSource.searchItems("Test") } returns flowOf(pagingData)
+        coEvery { remoteDataSource.searchItems(QUERY) } returns flowOf(pagingData)
 
-        repository.searchItems("Test")
+        repository.searchItems(QUERY)
             .take(1)
             .test(timeout = 5.seconds) {
                 val result = awaitItem()
@@ -66,6 +67,6 @@ class MeliRepositoryTest {
                 awaitComplete()
             }
 
-        coVerify { remoteDataSource.searchItems("Test") }
+        coVerify { remoteDataSource.searchItems(QUERY) }
     }
 }

@@ -48,4 +48,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.moshi)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
 }

@@ -16,15 +16,15 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
-private const val PAGE_SIZE_MOVIE = 10
-private const val INITIAL_LOAD_SIZE_MOVIE = 15
+private const val PAGE_SIZE = 10
+private const val INITIAL_LOAD = 15
 
 class RemoteDataSource @Inject constructor(private val myService: MeliService) : IRemoteDataSource {
     override fun searchItems(query: String): Flow<PagingData<SearchItem>> = Pager(
         config = PagingConfig(
-            pageSize = PAGE_SIZE_MOVIE,
+            pageSize = PAGE_SIZE,
             enablePlaceholders = false,
-            initialLoadSize = INITIAL_LOAD_SIZE_MOVIE,
+            initialLoadSize = INITIAL_LOAD,
         ),
         pagingSourceFactory = {
             SearchPaging(myService, query)

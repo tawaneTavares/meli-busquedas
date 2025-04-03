@@ -46,4 +46,6 @@ object MockResponse {
     )
 
     val listSearchItem = listOf(searchItem)
+
+    val QUERY = "Test"
 }

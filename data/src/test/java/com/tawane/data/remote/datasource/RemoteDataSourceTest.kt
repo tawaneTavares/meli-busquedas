@@ -3,6 +3,7 @@ package com.tawane.data.remote.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.cash.turbine.test
+import com.tawane.data.mock.MockResponse.QUERY
 import com.tawane.data.mock.MockResponse.apiResponse
 import com.tawane.data.mock.MockResponse.emptyApiResponse
 import com.tawane.data.remote.model.ResultResponse
@@ -30,14 +31,14 @@ class RemoteDataSourceTest {
     fun setup() {
         meliService = mockk()
         remoteDataSource = RemoteDataSource(meliService)
-        pagingSource = SearchPaging(meliService, "Test")
+        pagingSource = SearchPaging(meliService, QUERY)
     }
 
     // TODO atention: this tests are failing because we are using a json string instead of a real api response
 
     @Test
     fun `Paging Source Load Success`() = runTest {
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } returns apiResponse
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } returns apiResponse
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -58,7 +59,7 @@ class RemoteDataSourceTest {
     fun `Paging Source update next key Success`() = runTest {
         val currentPage = 0
         val pageSize = 50
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(currentPage), eq(pageSize)) } returns apiResponse
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(currentPage), eq(pageSize)) } returns apiResponse
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -82,7 +83,7 @@ class RemoteDataSourceTest {
     @Test
     fun `Paging Source Load Error`() = runTest {
         val exception = RuntimeException("Simulated API error")
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } throws exception
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } throws exception
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -99,7 +100,7 @@ class RemoteDataSourceTest {
 
     @Test
     fun `Paging Source empty list`() = runTest {
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } returns emptyApiResponse
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } returns emptyApiResponse
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -118,9 +119,9 @@ class RemoteDataSourceTest {
 
     @Test
     fun `searchItems emit success`() = runTest {
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } returns apiResponse
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } returns apiResponse
 
-        remoteDataSource.searchItems("Test").test {
+        remoteDataSource.searchItems(QUERY).test {
             val pagingData = awaitItem()
             assertNotNull(pagingData)
             cancelAndIgnoreRemainingEvents()
@@ -129,9 +130,9 @@ class RemoteDataSourceTest {
 
     @Test
     fun `searchItems emit success and awaitComplete`() = runTest {
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } returns apiResponse
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } returns apiResponse
 
-        remoteDataSource.searchItems("Test")
+        remoteDataSource.searchItems(QUERY)
             .take(1)
             .test(timeout = 5.seconds) {
                 val pagingData = awaitItem()
@@ -143,9 +144,9 @@ class RemoteDataSourceTest {
     @Test
     fun `searchItems emit error`() = runTest {
         val exception = RuntimeException("Simulated API error")
-        coEvery { meliService.searchItems(eq("MLB"), eq("Test"), eq(0), eq(50)) } throws exception
+        coEvery { meliService.searchItems(eq("MLB"), eq(QUERY), eq(0), eq(50)) } throws exception
 
-        remoteDataSource.searchItems("Test")
+        remoteDataSource.searchItems(QUERY)
             .catch { error ->
                 assertEquals(exception.message, error.message)
             }
