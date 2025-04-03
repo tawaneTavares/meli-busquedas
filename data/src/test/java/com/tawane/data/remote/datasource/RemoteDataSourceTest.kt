@@ -1,6 +1,7 @@
 package com.tawane.data.remote.datasource
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import app.cash.turbine.test
 import com.tawane.data.mock.MockResponse.apiResponse
 import com.tawane.data.mock.MockResponse.emptyApiResponse
@@ -8,6 +9,7 @@ import com.tawane.data.remote.model.ResultResponse
 import com.tawane.data.remote.paging.SearchPaging
 import com.tawane.data.remote.service.MeliService
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.catch
@@ -150,5 +152,18 @@ class RemoteDataSourceTest {
             .test {
                 cancelAndIgnoreRemainingEvents()
             }
+    }
+
+    @Test
+    fun `Paging Source refresh key`() = runTest {
+        val state = mockk<PagingState<Int, ResultResponse>>()
+        coEvery { state.anchorPosition } returns 0
+        coEvery { state.closestPageToPosition(0) } returns mockk {
+            every { prevKey } returns 0
+            every { nextKey } returns 100
+        }
+
+        val result = pagingSource.getRefreshKey(state)
+        assertEquals(50, result)
     }
 }
