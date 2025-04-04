@@ -24,13 +24,13 @@ class SearchPaging(private val service: MeliService, private val query: String) 
         val position = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-            // TODO trecho de código pode ser removido após correção da api
+            // TODO atention: this is a workaround to avoid the api call
             val jsonAdapter: JsonAdapter<ApiResponse> = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build().adapter(ApiResponse::class.java)
             val response = jsonAdapter.fromJson(query)
 
-            // TODO removido pois api estava retornando 403
+            // TODO atention: this is the correct way to call the api
 //            val response = service.searchItems("MLB", query, position, PAGE_SIZE)
             val items = response?.results
             val totalPages = response?.paging?.total ?: (STARTING_PAGE_INDEX / PAGE_SIZE)

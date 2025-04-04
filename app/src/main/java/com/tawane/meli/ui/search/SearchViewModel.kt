@@ -23,7 +23,7 @@ class SearchViewModel @Inject constructor(private val searchItemsUseCase: Search
             state.copy(
                 query = newQuery,
                 searchResults = if (newQuery.isNotEmpty() && newQuery.length >= MINIMUM_QUERY_LENGTH) {
-                    // TODO está usando o mock pois o serviço está indisponível, o correto aqui seria enviar o "newQuery"
+                    // TODO atention: this is a workaround to avoid the api call, it can be replaced by "newQuery" when the api is implemented
                     searchItemsUseCase(fileMock).cachedIn(viewModelScope)
                 } else {
                     null

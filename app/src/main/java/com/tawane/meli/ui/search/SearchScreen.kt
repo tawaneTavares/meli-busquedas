@@ -89,7 +89,7 @@ fun SearchScreen(
                 onQueryChange = {
                     onQueryChange(
                         it,
-                        // TODO trecho de código pode ser removido após correção da api
+                        // TODO atention: this is a workaround to avoid the api call, it can be removed when the api is implemented
                         String(
                             context.resources.openRawResource(R.raw.search_items_response).readBytes(),
                         ),
@@ -104,7 +104,7 @@ fun SearchScreen(
                     .padding(horizontal = 16.dp),
                 colors = SearchBarColors(
                     containerColor = Color.White,
-                    dividerColor = Color.White,
+                    dividerColor = Color.Black,
                 ),
                 placeholder = { Text(text = stringResource(R.string.search_hint)) },
             ) {}
@@ -208,7 +208,7 @@ fun SearchResultItemView(modifier: Modifier = Modifier, item: SearchItem, onItem
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(item.thumbnail)
                     .build(),
-                contentDescription = "Product Thumbnail", // TODO colocar no string
+                contentDescription = stringResource(R.string.product_thumbnail_description),
                 placeholder = painterResource(R.drawable.ic_empty_image),
                 error = painterResource(R.drawable.ic_empty_image),
                 contentScale = ContentScale.Fit,

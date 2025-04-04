@@ -143,7 +143,7 @@ fun ProductDetailHeader(modifier: Modifier = Modifier, item: SearchItem) {
                     .placeholder(R.drawable.ic_empty_image)
                     .error(R.drawable.ic_empty_image)
                     .build(),
-                contentDescription = "Product Thumbnail", // TODO colocar no string
+                contentDescription = stringResource(R.string.product_thumbnail_description),
                 placeholder = painterResource(R.drawable.ic_empty_image),
                 error = painterResource(R.drawable.ic_empty_image),
                 contentScale = ContentScale.Fit,
@@ -310,7 +310,7 @@ fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem, onItemClick:
                     .placeholder(R.drawable.ic_empty_image)
                     .error(R.drawable.ic_empty_image)
                     .build(),
-                contentDescription = "Product Thumbnail", // TODO colocar no string
+                contentDescription = stringResource(R.string.product_thumbnail_description),
                 placeholder = painterResource(R.drawable.ic_empty_image),
                 error = painterResource(R.drawable.ic_empty_image),
                 contentScale = ContentScale.Fit,

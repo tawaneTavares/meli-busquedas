@@ -12,4 +12,5 @@
     <string name="error_message">"ops, ocorreu um erro"</string>
     <string name="empty_message">"Digite pelo menos 3 caracteres e \ncomeçe a pesquisar agora mesmo!"</string>
     <string name="last_viewed">Últimos vistos</string>
+    <string name="product_thumbnail_description">Product Thumbnail</string>"
 </resources>
