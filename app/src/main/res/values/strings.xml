@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">challenge meli</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="search_hint">Buscar produtos, marcas e muito mais…</string>
     <string name="minimum_characters_message">Digite pelo menos 3 caracteres para buscar</string>
     <string name="free_shipping">Frete Grátis</string>

@@ -112,7 +112,7 @@ fun ProductDetailScreen(
 
             uiState.lastViewedItems?.let { item ->
                 HorizontalCardList(items = item, modifier = modifier.padding(top = 16.dp), onItemClick = onItemClick)
-            }
+           }
         }
     }
 }
@@ -263,13 +263,15 @@ private fun CharacteristicItem(name: String, value: String) {
 @Composable
 fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>, onItemClick: (SearchItem) -> Unit = {}) {
     Column {
-        Text(
-            text = stringResource(R.string.last_viewed),
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.Black,
-            fontSize = 20.sp,
-            modifier = modifier.padding(start = 7.dp, top = 10.dp),
-        )
+        if (items.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.last_viewed),
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.Black,
+                fontSize = 20.sp,
+                modifier = modifier.padding(start = 7.dp, top = 10.dp),
+            )
+        }
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = 5.dp),
