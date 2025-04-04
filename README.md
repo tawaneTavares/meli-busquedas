@@ -88,9 +88,8 @@ A Api não estava funcionando, sempre me retornava com 403 mesmo com o token cor
 
 ## 💄 Screenshots
 
-
-![image](https://github.com/user-attachments/assets/7d053e5e-843d-42db-b987-bb88e3bcad92)
-![image](https://github.com/user-attachments/assets/1f4f5b43-d1e1-4f2a-88da-c54ff64742a1)
-![image](https://github.com/user-attachments/assets/fb0fe2c8-6a77-4508-893e-c3fe406906b7)
+<img loading="lazy" src="https://github.com/user-attachments/assets/7d053e5e-843d-42db-b987-bb88e3bcad92" width="250"/> 
+<img loading="lazy" src="https://github.com/user-attachments/assets/1f4f5b43-d1e1-4f2a-88da-c54ff64742a1" width="250"/>
+<img loading="lazy" src="https://github.com/user-attachments/assets/fb0fe2c8-6a77-4508-893e-c3fe406906b7" width="250"/>
 
 
