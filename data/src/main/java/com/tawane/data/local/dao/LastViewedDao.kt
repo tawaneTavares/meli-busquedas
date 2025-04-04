@@ -13,13 +13,13 @@ interface LastViewedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLastViewedItem(lastViewedItem: LastViewedItemEntity)
 
-    @Query("SELECT * FROM last_viewed_items ORDER BY last_viewed_date DESC LIMIT 5")
+    @Query("SELECT * FROM last_viewed_items ORDER BY last_viewed_date DESC LIMIT 10")
     fun getLastViewedItems(): Flow<List<LastViewedItemEntity>>
 
     @Query(
         "DELETE FROM last_viewed_items WHERE id " +
             "NOT IN (SELECT id FROM last_viewed_items " +
-            "ORDER BY last_viewed_date DESC LIMIT 5)",
+            "ORDER BY last_viewed_date DESC LIMIT 10)",
     )
     suspend fun deleteOldLastViewedItems()
 }

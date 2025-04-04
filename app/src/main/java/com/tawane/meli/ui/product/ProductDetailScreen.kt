@@ -24,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -237,13 +238,59 @@ fun ProductDescription(modifier: Modifier = Modifier, item: SearchItem) {
 }
 
 @Composable
+private fun CharacteristicItem(name: String, value: String) {
+    Column {
+        Text(
+            text = name.uppercase(),
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            ),
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color.Gray,
+        )
+    }
+}
+
+@Composable
+fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>) {
+    Column {
+        Text(
+            text = stringResource(R.string.last_viewed),
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Black,
+            fontSize = 20.sp,
+            modifier = modifier.padding(start = 7.dp, top = 10.dp),
+        )
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 5.dp),
+        ) {
+            items(items) { item ->
+                HorizontalCard(modifier = modifier, item = item)
+            }
+        }
+    }
+}
+
+@Composable
 fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem) {
     Card(
         modifier = Modifier
             .width(100.dp)
-            .padding(8.dp),
+            .height(140.dp)
+            .padding(vertical = 8.dp, horizontal = 4.dp),
         shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardColors(
+            disabledContainerColor = Color.White,
+            containerColor = Color.White,
+            disabledContentColor = Color.Black,
+            contentColor = Color.Black,
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
         Column(
             modifier = Modifier
@@ -268,39 +315,11 @@ fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = item.title ?: "",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
             )
         }
-    }
-}
-
-@Composable
-fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>) {
-    LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 16.dp),
-    ) {
-        items(items) { item ->
-            HorizontalCard(modifier = modifier, item = item)
-        }
-    }
-}
-
-@Composable
-private fun CharacteristicItem(name: String, value: String) {
-    Column {
-        Text(
-            text = name.uppercase(),
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-            ),
-        )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray,
-        )
     }
 }
