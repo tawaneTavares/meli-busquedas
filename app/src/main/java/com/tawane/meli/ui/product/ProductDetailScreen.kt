@@ -62,7 +62,12 @@ import com.tawane.meli.ui.utils.formatCurrency
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductDetailScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit, uiState: ProductDetailUiState) {
+fun ProductDetailScreen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    uiState: ProductDetailUiState,
+    onItemClick: (SearchItem) -> Unit = {},
+) {
     Column {
         TopAppBar(
             title = { Text(text = stringResource(R.string.app_name)) },
@@ -106,7 +111,7 @@ fun ProductDetailScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit, 
             }
 
             uiState.lastViewedItems?.let { item ->
-                HorizontalCardList(items = item, modifier = modifier.padding(top = 16.dp))
+                HorizontalCardList(items = item, modifier = modifier.padding(top = 16.dp), onItemClick = onItemClick)
             }
         }
     }
@@ -256,7 +261,7 @@ private fun CharacteristicItem(name: String, value: String) {
 }
 
 @Composable
-fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>) {
+fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>, onItemClick: (SearchItem) -> Unit = {}) {
     Column {
         Text(
             text = stringResource(R.string.last_viewed),
@@ -270,14 +275,14 @@ fun HorizontalCardList(modifier: Modifier = Modifier, items: List<SearchItem>) {
             contentPadding = PaddingValues(horizontal = 5.dp),
         ) {
             items(items) { item ->
-                HorizontalCard(modifier = modifier, item = item)
+                HorizontalCard(modifier = modifier, item = item, onItemClick = onItemClick)
             }
         }
     }
 }
 
 @Composable
-fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem) {
+fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem, onItemClick: (SearchItem) -> Unit = {}) {
     Card(
         modifier = Modifier
             .width(100.dp)
@@ -290,6 +295,7 @@ fun HorizontalCard(modifier: Modifier = Modifier, item: SearchItem) {
             disabledContentColor = Color.Black,
             contentColor = Color.Black,
         ),
+        onClick = { onItemClick(item) },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
         Column(

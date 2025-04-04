@@ -22,6 +22,9 @@ fun ProductNavHost(navController: NavHostController, moshi: Moshi) {
                 navController.navigateUp()
             },
             moshi = moshi,
+            navigateToProductDetails = { product ->
+                navController.navigateToProductDetails(product, moshi = moshi)
+            },
         )
     }
 }

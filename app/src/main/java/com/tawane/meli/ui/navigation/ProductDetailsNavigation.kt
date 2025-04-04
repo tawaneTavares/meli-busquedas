@@ -18,7 +18,11 @@ import com.tawane.meli.ui.product.ProductDetailScreen
 import com.tawane.meli.ui.product.ProductDetailViewModel
 import timber.log.Timber
 
-fun NavGraphBuilder.productDetailsScreen(onPopBackStack: () -> Unit, moshi: Moshi) {
+fun NavGraphBuilder.productDetailsScreen(
+    onPopBackStack: () -> Unit,
+    moshi: Moshi,
+    navigateToProductDetails: (SearchItem) -> Unit,
+) {
     composable(
         route = ProductDetailsScreenDestination.routeWithArgs,
         arguments = listOf(
@@ -46,6 +50,7 @@ fun NavGraphBuilder.productDetailsScreen(onPopBackStack: () -> Unit, moshi: Mosh
                     onPopBackStack()
                 },
                 uiState = uiState,
+                onItemClick = { navigateToProductDetails(it) },
             )
         } ?: LaunchedEffect(Unit) {
             onPopBackStack()
