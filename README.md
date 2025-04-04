@@ -7,7 +7,7 @@
 - Android SDK 26 ou superior
 
 
-  📌 Arquitetura Utilizada
+## 📌 Arquitetura Utilizada
 
 ### Clean Architecture
 O projeto é estruturado em três módulos:
@@ -58,7 +58,7 @@ O projeto é estruturado em três módulos:
 ### Dados
 - **Paging 3**: Carregamento paginado
 
-  ### Testes
+### Testes
 - **junit**
 - **Espresso**
 - **Coroutines Test**
@@ -87,6 +87,7 @@ A Api não estava funcionando, sempre me retornava com 403 mesmo com o token cor
 
 
 ## 💄 Screenshots
+
 
 ![image](https://github.com/user-attachments/assets/7d053e5e-843d-42db-b987-bb88e3bcad92)
 ![image](https://github.com/user-attachments/assets/1f4f5b43-d1e1-4f2a-88da-c54ff64742a1)
